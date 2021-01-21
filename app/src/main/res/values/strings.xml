@@ -1,0 +1,17 @@
+<resources>
+
+    <string name="app_name">FitFight</string>
+
+    <string name="level_base_title"> Base Training</string>
+    <string name="level_base_head">FitFighter - Base</string>
+    <string name="level_base_info">8min   40kcal   L1</string>
+    <string name="level_enhance_title"> Enhance Training</string>
+    <string name="level_enhance_head">FitFighter - Enhance</string>
+    <string name="level_enhance_info">9min   60kcal   L3</string>
+    <string name="level_acme_title"> Acme Training</string>
+    <string name="level_acme_head">FitFighter - Acme</string>
+    <string name="level_acme_info">11min   100kcal   L5</string>
+
+
+
+</resources>
