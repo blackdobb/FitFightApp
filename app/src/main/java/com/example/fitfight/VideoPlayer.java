@@ -39,41 +39,16 @@ public class VideoPlayer extends MainActivity {
     }
 
     private void loadVideo() {
-        AlertDialog.Builder reminder = new AlertDialog.Builder(VideoPlayer.this);
-        reminder.setTitle("Level limited!")
-                .setMessage("Please complete the pre-training")
-                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                        finish();
-                    }
-                });
-
         String uri = "android.resource://" + getPackageName() + "/";
-        SharedPreferences sp = getSharedPreferences("int",MODE_PRIVATE);
-        int duration = sp.getInt("duration",0);
 
         switch (tag) {
             case 1:
                 uri += R.raw.base;
                 break;
             case 2:
-                if (duration>=8) {
-                    uri += R.raw.enhance;
-                    break; }
-                else{
-                    reminder.create()
-                            .show();
-                    return; }
-            case 3:
-                if (duration>= 9) {
-                    uri += R.raw.acme;
-                    break; }
-                else{
-                    reminder.create()
-                            .show();
-                    return; }
+                uri += R.raw.enhance;
+                break;
+
         }
         videoView.setVideoURI(Uri.parse(uri));
         mediaController = new MediaController(this);
@@ -98,9 +73,6 @@ public class VideoPlayer extends MainActivity {
             case 2:
                 message = "FitFighter-Enhance ";
                 break;
-            case 3:
-                message = "FitFighter-Acme ";
-                break;
         }
         AlertDialog.Builder builder = new AlertDialog.Builder(VideoPlayer.this);
         builder.setTitle("Training finished!")
@@ -113,21 +85,15 @@ public class VideoPlayer extends MainActivity {
                         SharedPreferences.Editor editor = sp.edit();
                         int du= sp.getInt("duration",0);
                         if(tag==1){
-                            if(du <= 8) {
+                            if(du < 8) {
                                 editor.remove("duration");
                                 editor.putInt("duration", 8);
                             }
                         }
                         if(tag==2){
-                            if(du <= 9) {
+                            if(du < 9) {
                                 editor.remove("duration");
                                 editor.putInt("duration", 9);
-                            }
-                        }
-                        if(tag==3){
-                            if(du <= 10) {
-                                editor.remove("duration");
-                                editor.putInt("duration", 10);
                             }
                         }
                         editor.apply();
