@@ -194,7 +194,7 @@
                         android:layout_marginStart="@dimen/level_head_margin_left"
                         android:layout_marginTop="@dimen/level_head_margin_top"
                         android:text="@string/level_acme_head"
-                        android:textColor="@color/font_gray"
+                        android:textColor="@color/aliceblue"
                         android:textSize="@dimen/level_title_size" />
 
                     <TextView
@@ -203,7 +203,7 @@
                         android:layout_marginStart="@dimen/level_info_margin_left"
                         android:layout_marginTop="@dimen/level_info_margin_top"
                         android:text="@string/level_acme_info"
-                        android:textColor="@color/font_gray"
+                        android:textColor="@color/aliceblue"
                         android:textSize="@dimen/level_info_size" />
                 </FrameLayout>
             </LinearLayout>

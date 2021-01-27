@@ -1,11 +1,15 @@
 package com.example.fitfight;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
+import android.telephony.PhoneStateListener;
+import android.telephony.TelephonyManager;
 import android.view.KeyEvent;
 import android.widget.MediaController;
 import android.widget.VideoView;
@@ -13,8 +17,9 @@ import android.widget.VideoView;
 public class VideoPlayer extends MainActivity {
 
     private VideoView videoView;
-
+    private boolean afterPhoneCall;
     private MediaController mediaController;
+    private TelephonyManager phoneManager;
 
 
     private int tag;
@@ -26,6 +31,9 @@ public class VideoPlayer extends MainActivity {
         tag = getIntent().getIntExtra("tag", 1);
         setContentView(R.layout.activity_test_video_player);
         findViewById();
+        phoneManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
+        phoneManager.listen(new MobliePhoneStateListener(),
+                PhoneStateListener.LISTEN_CALL_STATE);
         initView();
     }
 
@@ -134,5 +142,33 @@ public class VideoPlayer extends MainActivity {
             }
         }
         return super.onKeyDown(keyCode, event);
+    }
+    // 内部类
+    private class MobliePhoneStateListener extends PhoneStateListener {
+
+        @Override
+        public void onCallStateChanged(int state, String phoneNumber) {
+            switch (state) {
+                case TelephonyManager.CALL_STATE_IDLE:
+                    if (afterPhoneCall) {
+                        currentPosition = videoView.getCurrentPosition();
+                        videoView.seekTo(currentPosition);
+                        videoView.resume();
+                    }
+                    break;
+                case TelephonyManager.CALL_STATE_RINGING:
+                    videoView.pause();
+                    currentPosition = videoView.getCurrentPosition();
+                    afterPhoneCall = true;
+                    break;
+                case TelephonyManager.CALL_STATE_OFFHOOK:
+                    videoView.pause();
+                    currentPosition = videoView.getCurrentPosition();
+                    afterPhoneCall = true;
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 }
